@@ -1,9 +1,9 @@
 import { Component , signal } from '@angular/core';
-import {form ,FormField , required,email}  from '@angular/forms/signals';
+import {form ,FormField , required,email, submit}  from '@angular/forms/signals';
 
 interface LoginData {
   email:string,
-  password:string,
+  password:any,
   rememberMe:boolean
 }
 
@@ -25,10 +25,21 @@ loginForm = form(this.loginDeets , (fieldPath) =>
 { 
   required(fieldPath.email , {message: 'Email is required'});
   email(fieldPath.email , {message:'enter a valid email'});
-
+  required(fieldPath.email, {message:'password required'});
 });
+
 onSubmit(event:Event){
 event.preventDefault();
+submit(this.loginForm , async() => {
+  const credentials=this.loginDeets();
+
+  const email='kelly@gmail.com'
+  const password= 1234
+
+  if (credentials.email === email && credentials.password === password) {
+    this.onSubmit
+  };
+});
 
 
 }
