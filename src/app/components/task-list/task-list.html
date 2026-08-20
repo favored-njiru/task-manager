@@ -28,7 +28,7 @@
         <h3 
           class="text-gray-600 font-medium" 
           [class.line-through]="task.completed"
-          [class.text-gray-400]="task.completed"
+          
         >
           {{ task.title }}
         </h3>
@@ -39,7 +39,7 @@
             class="rounded-lg bg-orange-300 text-white px-5 py-1 hover:bg-orange-400" 
             (click)="doneTask(task)"
           >
-            {{ task.completed ? 'Undo' : 'Done' }}
+          done
           </button>
 
           <button 
