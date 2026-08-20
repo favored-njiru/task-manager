@@ -26,6 +26,10 @@ loginForm = form(this.loginDeets , (fieldPath) =>
   required(fieldPath.email , {message: 'Email is required'});
   email(fieldPath.email , {message:'enter a valid email'});
 
-  required(fieldPath.password,{message: 'password required'});
 });
+onSubmit(event:Event){
+event.preventDefault();
+
+
+}
 }
