@@ -1,0 +1,14 @@
+<p>calculator works!</p>
+<div class="flex gap-2 items-center">
+<input type="number" (input)="num1.set($any($event.target).value)" class="rounded-lg bg-red-300"/>
+
+<input type="number" name="num2" class="rounded-lg bg-blue-300 "/>
+<select (change)="operator.set($any($event.target).value)">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+</div>
+<p> {{num1 ()}}</p>
+<p> {{operator ()}}</p>
