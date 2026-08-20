@@ -1,0 +1,31 @@
+<form class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
+ <div >
+    <label >Email  
+<input type="email" [formField]="loginForm.email"  class="w-full p-1  px-2 border border-gray-300 rounded-lg focus:outline-none placeholder-gray-400" />
+    </label>
+    @if (loginForm.email().invalid() && loginForm.email().touched()){
+      <div class="error">
+         @for (errors of loginForm.email().errors(); track errors.kind){
+            <span {{ error.message }}></span>
+         }
+      </div>
+    }
+ </div>
+ <div>
+    <label>Password
+        <input type="password" [formField]="loginForm.password" class="w-full p-1  px-2 border border-gray-300 rounded-lg focus:outline-none placeholder-gray-400 "/>
+    </label>
+
+ </div>
+ <div>
+    <label> Remember me
+   </label>
+   <input type="checkbox" [formField]="loginForm.rememberMe" class="h-4 w-4 " />
+ </div>
+ <div>
+    <button class="w-full bg-blue-500 text-white font-medium rounded-lg px-4 py-1 hover-bg-700 transition-colors shadow-sm" type="submit">log in</button>
+ </div>
+
+
+
+</form>
