@@ -1,6 +1,7 @@
 import { Component ,signal , computed} from '@angular/core';
 import { OperatorFunction } from 'rxjs';
 
+
 @Component({
   selector: 'app-calculator',
   imports: [],
@@ -31,5 +32,8 @@ total = computed (
 );
 
 
+
+
 }
+
 

@@ -1,5 +1,5 @@
 import { Component , signal } from '@angular/core';
-import {form ,FormField , required,email, submit}  from '@angular/forms/signals';
+import {form ,FormField ,Validator, required,email, submit}  from '@angular/forms/signals';
 
 interface LoginData {
   email:string,
@@ -20,7 +20,7 @@ email: '',
 password: '',
 rememberMe: false,
 });
-
+//property
 loginForm = form(this.loginDeets , (fieldPath) =>
 { 
   required(fieldPath.email , {message: 'Email is required'});
