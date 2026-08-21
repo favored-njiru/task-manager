@@ -1,4 +1,4 @@
-import { Component  } from '@angular/core';
+import { Component  , signal , computed} from '@angular/core';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-task-list',
@@ -54,5 +54,13 @@ doneTask(selectedTask:{title:string ; completed:boolean}){
  selectedTask.completed = !selectedTask.completed;
 }
 
+//filters for month
+months = signal(['January','February','March','April','May']);
+searchTerm = signal ('');
 
+filteredItems = computed(() => {
+const lowerCaseSearchTerm = this.searchTerm().toLowerCase();
+return this.months().filter( month => month.toLowerCase().includes(lowerCaseSearchTerm));
+
+});
 }
