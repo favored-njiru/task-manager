@@ -1,0 +1,62 @@
+<h3 class="text-bold">{{date|date}} </h3>
+<header class="text-center ">
+    <h1 class="text-2xl font-bold text-blue-800">TASK MANAGER</h1>
+
+</header>
+
+<select (change)="searchTerm.set($any($event.target).value)">
+  @for (month of filteredItems() ; track $index){
+  <option [value]="month">{{month }}</option>
+  <option [value]="month">{{month }}</option>
+  }
+</select>
+
+
+<main class="text-justify max-w-3xl" >
+<section class="bg-gray p-6 rounded-xl ">
+<h2 class="text-lg font-semibold text-blue-400">
+    ADD A TASK
+</h2>
+
+<div class="flex gap-3">
+    <input #taskInput type="text" placeholder="Input task"
+    class="flex-1 border border-gray-300 h-12 p-3 rounded-md text-gray-900"
+   >
+   <button class="bg-pink-600 text-white px-9 py-3 rounded-lg hover:bg-orange-400 " (click)="addTask(taskInput.value); taskInput.value=''" >add task</button>
+</div>
+</section>
+
+<section class="bg-gray-100 p-6 rounded-xl border border-blue-50">
+  <h2 class="text-xl font-semibold text-blue-400 mb-4">MY TASKS</h2>
+
+  <div class="flex flex-col gap-3">
+    @for (task of tasks; track task.title) {
+      <div class="flex justify-between items-center bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+
+        <h3 
+          class="text-gray-600 font-medium" 
+          [class.line-through]="task.completed" >
+          {{ task.title }}
+        </h3>
+
+        <div class="flex gap-2 items-center">
+          <button 
+            class="rounded-lg bg-orange-300 text-white px-5 py-1 hover:bg-orange-400" 
+            (click)="doneTask(task)">
+          done
+          </button>
+
+          <button 
+            class="text-white bg-red-300 rounded-lg px-5 py-1 hover:bg-red-600" 
+            (click)="deleteTask(task)"
+          >
+            Delete
+          </button>
+        </div>
+
+      </div>
+    }
+  </div>
+  
+</section>
+</main>
