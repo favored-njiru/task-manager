@@ -1,8 +1,11 @@
-import { Component , signal } from '@angular/core';
-import {form ,FormField ,Validator, required,email, submit}  from '@angular/forms/signals';
+import { Component , inject, signal } from '@angular/core';
+import {form ,FormField ,Validator, FormRoot,required,email, submit}  from '@angular/forms/signals';
+import { Router } from '@angular/router';
 
 interface LoginData {
   email:string,
+
+  
   password:any,
   rememberMe:boolean
 }
@@ -10,11 +13,12 @@ interface LoginData {
 
 @Component({
   selector: 'app-login',
-  imports: [FormField],
+  imports: [FormField , FormRoot],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
+  private router = inject(Router);
 loginDeets = signal <LoginData> ({
 email: '',
 password: '',
@@ -25,22 +29,28 @@ loginForm = form(this.loginDeets , (fieldPath) =>
 { 
   required(fieldPath.email , {message: 'Email is required'});
   email(fieldPath.email , {message:'enter a valid email'});
-  required(fieldPath.email, {message:'password required'});
-});
+  required(fieldPath.password, {message:'password required'});
+},
 
-onSubmit(event:Event){
-event.preventDefault();
-submit(this.loginForm , async() => {
-  const credentials=this.loginDeets();
-
-  const email='kelly@gmail.com'
-  const password= 1234
-
-  if (credentials.email === email && credentials.password === password) {
-    this.onSubmit
-  };
-});
-
-
+{
+  submission: {
+    action: async (field) => {
+const credentials = field().value();
+if (credentials.email === 'kelly@gmail.com' && credentials.password === '1234') {
+  await this.router.navigate(['/task-list']);
+  return;
 }
+return {kind: 'serverError' , message :'failed to submit'};
+ }
+  }
+}
+
+
+);
+
+
+
+
+
+
 }

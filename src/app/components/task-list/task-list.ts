@@ -1,5 +1,8 @@
-import { Component  , signal , computed} from '@angular/core';
+import { Component  , signal , computed, Query} from '@angular/core';
 import { DatePipe } from '@angular/common';
+
+
+
 @Component({
   selector: 'app-task-list',
   imports: [DatePipe],
@@ -30,7 +33,7 @@ export class TaskList {
   completed: true
 
   },
-  {title: 'Read WOman Evolve',
+  {title: 'Read Woman Evolve',
     completed: false
 
 },
@@ -54,13 +57,19 @@ doneTask(selectedTask:{title:string ; completed:boolean}){
  selectedTask.completed = !selectedTask.completed;
 }
 
-//filters for month
-months = signal(['January','February','March','April','May']);
+
 searchTerm = signal ('');
 
-filteredItems = computed(() => {
-const lowerCaseSearchTerm = this.searchTerm().toLowerCase();
-return this.months().filter( month => month.toLowerCase().includes(lowerCaseSearchTerm));
 
+
+
+
+filteredDoneTasks = computed( () => {
+  const query = this.searchTerm().toLowerCase();
+  return this.tasks.filter(task => task.completed && task.title.toLowerCase().includes(query));
 });
+
+search(value:string){
+  this.searchTerm.set(value);
+}
 }
