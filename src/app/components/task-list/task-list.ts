@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class TaskList {
   date = new Date(2026,7,18);
 
-  tasks = [
+  tasks = signal([
   {title: 'Get Grace gifts',
     completed: true
 
@@ -41,20 +41,25 @@ export class TaskList {
     completed: true
 
   }
-  ];
+  ]);
 
-deleteTask(selectedTask: {title: string}) {
-  this.tasks = this.tasks.filter(task => task !== selectedTask);
-}
+
 addTask(newTaskTitle:string):void{
+if (!newTaskTitle) {
+  return ;
+}
+
   const newTask = {
     title : newTaskTitle,
     completed: false }
 
-    this.tasks.push(newTask);
+    this.tasks.update(tasks => [...tasks, newTask]);
+   
 }
 doneTask(selectedTask:{title:string ; completed:boolean}){
- selectedTask.completed = !selectedTask.completed;
+  this.tasks.update(tasks => tasks.map(task =>
+    task === selectedTask ? { ...task, completed: !task.completed } : task
+  ));
 }
 
 
@@ -65,11 +70,15 @@ searchTerm = signal ('');
 
 
 filteredDoneTasks = computed( () => {
-  const query = this.searchTerm().toLowerCase();
-  return this.tasks.filter(task => task.completed && task.title.toLowerCase().includes(query));
+  const search = this.searchTerm().toLowerCase();
+  return this.tasks().filter(task => task.title.toLowerCase().includes(search));
 });
 
 search(value:string){
   this.searchTerm.set(value);
+}
+
+deleteTask(selectedTask: {title: string}) {
+  this.tasks.update(tasks => tasks.filter(task => task !== selectedTask));
 }
 }
